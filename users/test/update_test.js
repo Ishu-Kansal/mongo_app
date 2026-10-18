@@ -5,7 +5,7 @@ describe("Updating Records", () => {
   let joe;
 
   beforeEach(async () => {
-    joe = new User({ name: "joe" });
+    joe = new User({ name: "joe", postCount: 0 });
     await joe.save();
   });
 
@@ -35,5 +35,11 @@ describe("Updating Records", () => {
 
   it("a model class can find record by id and update", async () => {
     await assertName(User.findByIdAndUpdate(joe._id, { name: "alex" }));
+  });
+
+  it("a user can have their post count incremented by 1", async () => {
+    await User.updateMany({ name: "joe" }, { $inc: { postCount: 5 } });
+    record = await User.findOne({ name: "joe" });
+    assert(record.postCount === 5);
   });
 });
