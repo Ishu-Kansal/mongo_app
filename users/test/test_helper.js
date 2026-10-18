@@ -9,10 +9,18 @@ before(async () => {
 });
 
 beforeEach(async () => {
-  const { users } = mongoose.connection.collections;
+  const { users, comments, blogposts } = mongoose.connection.collections;
 
   if (users) {
     await users.deleteMany({});
+  }
+
+  if (comments) {
+    await comments.deleteMany({});
+  }
+
+  if (blogposts) {
+    await blogposts.deleteMany({});
   }
 });
 
